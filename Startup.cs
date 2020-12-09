@@ -28,6 +28,7 @@ namespace m183_shovel_knight_security
             services.AddSwaggerGen();
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddTransient<ShellHelper>();
+            services.AddCors();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -79,6 +80,11 @@ namespace m183_shovel_knight_security
                    spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowCredentials());
         }
     }
 }
