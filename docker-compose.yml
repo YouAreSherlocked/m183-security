@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  shovel-knight-mssql-server:
+    image: microsoft/mssql-server-linux:latest
+    container_name: shovel-knight-mssql
+    volumes:
+        - shovel-knight-mssql-server-data:/var/opt/mssql/data
+    environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=my-secret-pw-xD
+    ports:
+        - "1433:1433"
+
+volumes:
+  shovel-knight-mssql-server-data:

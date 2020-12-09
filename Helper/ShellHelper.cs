@@ -10,24 +10,30 @@ namespace m183_shovel_knight_security.Helper
     {
         public string Bash(string cmd)
         {
-            string filesFolder = "cd Files &&";
-            string escapedArgs = $"{filesFolder} {cmd.Replace("\"", "\\\"")}";
-            
-            var process = new Process()
+            try
             {
-                StartInfo = new ProcessStartInfo
+                string filesFolder = "cd Files &&";
+                string escapedArgs = $"{filesFolder} {cmd.Replace("\"", "\\\"")}";
+
+                var process = new Process()
                 {
-                    FileName = "/bin/bash",
-                    Arguments = $"-c \"{escapedArgs}\"",
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                }
-            };
-            process.Start();
-            string result = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-            return result;
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = "/bin/bash",
+                        Arguments = $"-c \"{escapedArgs}\"",
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                    }
+                };
+                process.Start();
+                string result = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+                return result;
+            } catch
+            {
+                return "The backend needs to be executed in a docker container";
+            }
         }
     }
 }

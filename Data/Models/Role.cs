@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 
 namespace m183_shovel_knight_security.Data.Models
 {
-    public class User
+    public class Role
     {
         public Guid Id { get; set; }
-        public string Nickname { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
-        public Role Role { get; set; }
+        public string Name { get; set; }
     }
 }

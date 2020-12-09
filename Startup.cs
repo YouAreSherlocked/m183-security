@@ -1,8 +1,10 @@
+using m183_shovel_knight_security.Data;
 using m183_shovel_knight_security.Helper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,7 +23,7 @@ namespace m183_shovel_knight_security
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
             services.AddSwaggerGen();
             services.AddRouting(options => options.LowercaseUrls = true);
@@ -74,7 +76,7 @@ namespace m183_shovel_knight_security
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
+                   spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
         }
