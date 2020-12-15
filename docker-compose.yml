@@ -1,6 +1,13 @@
 version: '3.4'
 
 services:
+  m183-shovel-knight-security:
+    image: ${DOCKER_REGISTRY-}m183shovelknightsecurity
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '5001:5001'
   shovel-knight-mssql-server:
     image: microsoft/mssql-server-linux:latest
     container_name: shovel-knight-mssql
