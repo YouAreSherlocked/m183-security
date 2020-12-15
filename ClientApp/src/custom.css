@@ -1,14 +1,21 @@
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+* {
+  text-decoration: none !important;
+  color: #333;
 }
 
-code {
-  color: #E01A76;
+#root {
+  margin: 20px 40px;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+header {
+  margin-bottom: 40px;
+}
+
+nav > * {
+  margin-right: 20px;
+}
+
+form input {
+  display: block;
+  margin-bottom: 20px;
 }
