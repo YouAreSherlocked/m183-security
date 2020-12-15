@@ -6,13 +6,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    depends_on:
+      -  shovel-knight-mssql
     ports:
       - '5001:5001'
-  shovel-knight-mssql-server:
+  shovel-knight-mssql:
     image: microsoft/mssql-server-linux:latest
-    container_name: shovel-knight-mssql
+    container_name: skmssql
     volumes:
-        - shovel-knight-mssql-server-data:/var/opt/mssql/data
+        - shovel-knight-data:/var/opt/mssql/data
     environment:
         - ACCEPT_EULA=Y
         - SA_PASSWORD=my-secret-pw-xD
@@ -20,4 +22,4 @@ services:
         - "1433:1433"
 
 volumes:
-  shovel-knight-mssql-server-data:
+  shovel-knight-data:
