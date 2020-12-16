@@ -14,9 +14,5 @@ namespace m183_shovel_knight_security.Data.Models
         public byte[] Image { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public User User { get; set; }
-
-        [NotMappedAttribute]
-        public IFormFile ImageUpload { get; set; }
-      
     }
 }

@@ -51,7 +51,7 @@ namespace m183_shovel_knight_security.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -86,6 +86,14 @@ namespace m183_shovel_knight_security.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
+        }
+
+        [HttpGet]
+        public IActionResult GetById(Guid id)
+        {
+            var user = _userService.GetById(id);
+            if (user == null) return BadRequest($"User with id {id} not found");
+            return Ok(user);
         }
 
         [HttpGet]

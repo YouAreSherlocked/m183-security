@@ -10,6 +10,7 @@ namespace m183_shovel_knight_security.Helper
     {
         public string Bash(string cmd)
         {
+            //TODO prevent shell injection attacks
             try
             {
                 string filesFolder = "cd Files &&";
