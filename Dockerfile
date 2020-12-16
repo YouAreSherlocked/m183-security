@@ -19,4 +19,4 @@ RUN dotnet publish "m183-shovel-knight-security.csproj" -c Release -o /app/publi
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "m183-shovel-knight-security.dll"]
+ENTRYPOINT ["dotnet", "m183-shovel-knight-security.dll", "dev-certs https --trust"]

@@ -10,6 +10,9 @@ services:
       -  shovel-knight-mssql
     ports:
       - '5001:5001'
+    environment:
+     - ASPNETCORE_URLS=https://0.0.0.0:5001
+     - ASPNETCORE_HTTPS_PORT=5001
   shovel-knight-mssql:
     image: microsoft/mssql-server-linux:latest
     container_name: skmssql
