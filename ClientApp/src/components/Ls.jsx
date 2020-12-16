@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Header from './Header';
-const API_URL = 'http://localhost:5000'
+const API_URL = 'https://localhost:5001'
 
 class Ls extends Component {
 
@@ -8,7 +8,7 @@ class Ls extends Component {
     super(props)
 
     this.state= {
-      output: null
+      output: ''
     }
 
     this.submit = this.submit.bind(this)
@@ -17,13 +17,9 @@ class Ls extends Component {
   async submit(e) {
     e.preventDefault()
     const cmd = e.target['cmd'].value
-    await fetch(`${API_URL}/ls`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(cmd)
-    }).then(res => this.setState({output: res.json()}))
+    await fetch(`${API_URL}/api/files?cmd=${cmd}`, {
+      method: 'GET'
+    }).then(res => res.text()).then(res => this.setState({output: res}))
   }
 
   render () {
@@ -35,6 +31,7 @@ class Ls extends Component {
             <input type="text" name="cmd" id="cmd"></input>
             <input type="submit" name="submit" id="submit" value="submit"></input>
         </form>
+        <h4>Output:</h4>
         <p>{ this.state.output }</p>
       </Fragment>
     );
