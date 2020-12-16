@@ -3,6 +3,7 @@ version: '3.4'
 services:
   m183-shovel-knight-security:
     image: ${DOCKER_REGISTRY-}m183shovelknightsecurity
+    container_name: shovel-knight-app
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,9 +11,8 @@ services:
       -  shovel-knight-mssql
     ports:
       - '5001:5001'
-    environment:
-     - ASPNETCORE_URLS=https://0.0.0.0:5001
-     - ASPNETCORE_HTTPS_PORT=5001
+    volumes:
+     - shovel-knight-app:/etc/ssl/certs
   shovel-knight-mssql:
     image: microsoft/mssql-server-linux:latest
     container_name: skmssql
@@ -26,3 +26,4 @@ services:
 
 volumes:
   shovel-knight-data:
+  shovel-knight-app:
