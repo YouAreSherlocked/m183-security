@@ -15,7 +15,7 @@ namespace m183_shovel_knight_security.Controllers
     public class FilesController : AuthControllerBase
     {
         private readonly ILogger<FilesController> _logger;
-        private ShellHelper _shellHelper;
+        private readonly ShellHelper _shellHelper;
         public FilesController(ILogger<FilesController> logger, ShellHelper shellHelper)
         {
             _logger = logger;
@@ -25,7 +25,6 @@ namespace m183_shovel_knight_security.Controllers
         [HttpGet]
         public IActionResult Command([Required] string cmd)
         {
-            string x = "32";
             _logger.LogInformation($"User executed the following command: {cmd}");
             return Ok(_shellHelper.Bash(cmd));
         }

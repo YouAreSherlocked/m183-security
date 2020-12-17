@@ -14,10 +14,29 @@
     <DockerComposeProjectPath>docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Files\PlagueKnight.txt" />
+    <None Remove="Files\ShieldKnight.txt" />
+    <None Remove="Files\SpecterKnight.txt" />
+    <None Remove="Files\TheEnchantress.txt" />
+  </ItemGroup>
+
 
 
   <ItemGroup>
-    <Content Include="Files\Example.txt">
+    <Content Include="Files\PlagueKnight.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\ShieldKnight.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\ShovelKnight.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\SpecterKnight.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\TheEnchantress.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

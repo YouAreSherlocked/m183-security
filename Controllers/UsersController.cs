@@ -20,7 +20,7 @@ namespace m183_shovel_knight_security.Controllers
     [Route("api/[controller]/[action]")]
     [Authorize]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : AuthControllerBase
     {
         private UserService _userService;
         private readonly AppSettings _appSettings;

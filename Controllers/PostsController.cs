@@ -23,11 +23,24 @@ namespace m183_shovel_knight_security.Controllers
     public class PostsController : AuthControllerBase
     {
         private readonly ILogger<PostsController> _logger;
-        public PostsController(ILogger<PostsController> logger)
+        private readonly PostService _postService;
+        public PostsController(ILogger<PostsController> logger, PostService postService)
         {
             _logger = logger;
+            _postService = postService;
         }
 
+        [HttpGet]
+        public IActionResult Get(Guid postId)
+        {
+            return Ok();
+        }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Ok();
+        }
         [HttpPost]
         public IActionResult Create()
         {

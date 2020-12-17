@@ -72,6 +72,7 @@ namespace m183_shovel_knight_security
                 services.AddRouting(options => options.LowercaseUrls = true);
             services.AddTransient<ShellHelper>();
             services.AddScoped<UserService>();
+            services.AddScoped<PostService>();
             services.AddCors();
 
 

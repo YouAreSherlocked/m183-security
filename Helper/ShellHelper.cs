@@ -8,6 +8,8 @@ namespace m183_shovel_knight_security.Helper
 {
     public class ShellHelper
     {
+        private readonly string[] _whitelistCommand = new string[] { "ls", "cat" };
+        private readonly string[] _blacklistParameter = new string[] { "&", "<", ";", "'", "`", "|" };
         public string Bash(string cmd)
         {
             //TODO prevent shell injection attacks
@@ -35,6 +37,12 @@ namespace m183_shovel_knight_security.Helper
             {
                 return "The backend needs to be executed in a docker container";
             }
+        }
+
+        private string ValidateInput(string cmd)
+        {
+            string[] command = cmd.Split(" ");
+            return "";
         }
     }
 }
