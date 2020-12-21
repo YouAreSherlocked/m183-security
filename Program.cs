@@ -21,6 +21,7 @@ namespace m183_shovel_knight_security
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+
                 });
     }
 }
