@@ -13,16 +13,16 @@ namespace m183_shovel_knight_security.Controllers
         [NonAction]
         protected Guid GetUserIdFromToken()
         {
+            //Method to get Id from authenticated user.
             var principal = HttpContext.User;
             if (principal?.Claims != null)
             {
                 foreach (var claim in principal.Claims)
                 {
-                    Console.WriteLine($"CLAIM TYPE: {claim.Type}; CLAIM VALUE: {claim.Value}");
+                   // Console.WriteLine($"CLAIM TYPE: {claim.Type}; CLAIM VALUE: {claim.Value}");
                 }
-
             }
-            Guid userId = Guid.Parse(principal?.Claims?.SingleOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value.ToUpper());
+            Guid userId = Guid.Parse(principal?.Claims?.SingleOrDefault(p => p.Type == ClaimTypes.Name)?.Value.ToUpper());
             return userId;
         }
     }

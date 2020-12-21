@@ -8,13 +8,17 @@ namespace m183_shovel_knight_security.Helper
 {
     public class ShellHelper
     {
-        private readonly string[] _whitelistCommand = new string[] { "ls", "cat" };
-        private readonly string[] _blacklistParameter = new string[] { "&", "<", ";", "'", "`", "|" };
+        private readonly string[] _whitelistCommand = { "ls", "cat" };
+        private readonly string[] _blacklistParameter = { "&", "<", ";", "'", "`", "|", "\""};
         public string Bash(string cmd)
         {
-            //TODO prevent shell injection attacks
             try
             {
+                if (!ValidateInput(cmd))
+                {
+                    return "Malicious command detected. Please give it up.";
+                }
+
                 string filesFolder = "cd Files &&";
                 string escapedArgs = $"{filesFolder} {cmd.Replace("\"", "\\\"")}";
 
@@ -39,10 +43,22 @@ namespace m183_shovel_knight_security.Helper
             }
         }
 
-        private string ValidateInput(string cmd)
+        private bool ValidateInput(string cmd)
         {
-            string[] command = cmd.Split(" ");
-            return "";
+            try
+            {
+                string[] command = cmd.Split(" ");
+                if (command.Length > 2) return false;
+                if (!_whitelistCommand.Contains(command[0])) return false;
+                if (command.Length == 2 && _blacklistParameter.Any(x => command[1].Contains(x))) return false;
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            
         }
     }
 }

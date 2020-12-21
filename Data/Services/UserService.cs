@@ -1,4 +1,5 @@
 ﻿using m183_shovel_knight_security.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,12 +30,12 @@ namespace m183_shovel_knight_security.Data.Services
 
         public IEnumerable<User> GetAll()
         {
-            return _context.Users;
+            return _context.Users.Include(x => x.Role).ToList();
         }
 
         public User GetById(Guid id)
         {
-            return _context.Users.Find(id);
+            return _context.Users.Include(x => x.Role).FirstOrDefault(x => x.Id == id);
         }
 
         public User Create(User user, string password)
@@ -50,6 +51,7 @@ namespace m183_shovel_knight_security.Data.Services
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+            user.RoleId = 1;
 
             _context.Users.Add(user);
             _context.SaveChanges();

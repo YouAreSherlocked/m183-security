@@ -16,6 +16,9 @@ using System.Threading.Tasks;
 using m183_shovel_knight_security.Data.Services;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
+using System.IO;
+using System.Reflection;
 
 namespace m183_shovel_knight_security
 {
@@ -35,6 +38,12 @@ namespace m183_shovel_knight_security
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+            });
+            ILogger logger = loggerFactory.CreateLogger<Startup>();
 
             services.AddSwaggerGen(c =>
             {
@@ -67,13 +76,34 @@ namespace m183_shovel_knight_security
                         new List<string>()
                       }
                     });
-                   });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+
+                // Extra security layer with authentication by api-key
+                /*
+                c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme()
+                    {
+                        Type = SecuritySchemeType.ApiKey,
+                        In = ParameterLocation.Header,
+                        Name = "Api-Key",
+                        Description = "showdown",
+                    });*/
+            }
+            );
 
                 services.AddRouting(options => options.LowercaseUrls = true);
             services.AddTransient<ShellHelper>();
             services.AddScoped<UserService>();
             services.AddScoped<PostService>();
             services.AddCors();
+
+            services.AddLogging(loggingBuilder => {
+                var loggingSection = _configuration.GetSection("Logging");
+                loggingBuilder.AddFile(loggingSection);
+            });
 
 
             // configure strongly typed settings objects
@@ -103,6 +133,7 @@ namespace m183_shovel_knight_security
                             // return unauthorized if user no longer exists
                             context.Fail("Unauthorized");
                         }
+                        logger.LogInformation($"Incoming request from User id: {userId}");
                         return Task.CompletedTask;
                     }
                 };

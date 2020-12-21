@@ -1,4 +1,6 @@
-﻿using m183_shovel_knight_security.Helper;
+﻿using m183_shovel_knight_security.Attributes;
+using m183_shovel_knight_security.Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -12,6 +14,7 @@ namespace m183_shovel_knight_security.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class FilesController : AuthControllerBase
     {
         private readonly ILogger<FilesController> _logger;
@@ -22,6 +25,12 @@ namespace m183_shovel_knight_security.Controllers
             _shellHelper = shellHelper;
         }
 
+        /// <summary>
+        /// Dispatches system commands to read or list files. (Linux Container)
+        /// </summary>
+        /// <remarks>
+        /// Allowed commands: ls, cat + 1 argument (Authentication needed).
+        /// </remarks>
         [HttpGet]
         public IActionResult Command([Required] string cmd)
         {
