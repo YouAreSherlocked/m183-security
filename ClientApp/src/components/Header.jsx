@@ -11,6 +11,7 @@ class Header extends Component {
             <NavLink to="/ls">Shell Injection</NavLink>
             <NavLink to="/login">Login</NavLink>
             <NavLink to="/register">Register</NavLink>
+            <NavLink to="/post">New Knight</NavLink>
         </nav>
       </header>
     );
