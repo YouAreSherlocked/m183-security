@@ -31,6 +31,8 @@ Beschrieb...
 
 
 # Journal
+### 16.12.2020
+- Post und Shell Injection Views + Fetchs
 
 ### 9.12.2020
 - Models erstellt 

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Header from './Header';
-const API_URL = 'https://localhost:5001'
+const API_URL = 'http://localhost:5001'
 
 class Post extends Component {
 
@@ -12,15 +12,20 @@ class Post extends Component {
         }
 
         this.submit = this.submit.bind(this)
-        }
+    }
 
-        async submit(e) {
+    async submit(e) {
         e.preventDefault()
-        const cmd = e.target['cmd'].value
-        await fetch(`${API_URL}/api/files?cmd=${cmd}`, {
-            method: 'GET'
+        const image = e.target['image'].value
+        const text = e.target['text'].value
+        await fetch(`${API_URL}/api/...`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 'image': image, 'text': text})
         }).then(res => res.text()).then(res => this.setState({output: res}))
-        }
+    }
 
     render () {
     return (
@@ -28,9 +33,9 @@ class Post extends Component {
         <Header></Header>
         <h2>Post new Knight</h2>
         <form onSubmit={ e => this.submit(e) }>
-            <label for="image">Image (Url)</label>
+            <label htmlFor="image">Image (Url)</label>
             <input type="text" name="image" id="image"></input>
-            <label for="name">Text</label>
+            <label htmlFor="text">Text</label>
             <input type="text" name="text" id="text"></input>
             <input type="submit" name="submit" id="submit" value="submit"></input>
         </form>

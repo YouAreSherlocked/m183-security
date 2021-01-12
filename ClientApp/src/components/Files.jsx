@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import Header from './Header';
-const API_URL = 'https://localhost:5001'
+const API_URL = 'http://localhost:5001'
 
-class Ls extends Component {
+class Files extends Component {
 
   constructor(props) {
     super(props)
@@ -38,4 +38,4 @@ class Ls extends Component {
   }
 }
 
-export default Ls;
+export default Files;
