@@ -8,10 +8,17 @@ namespace m183_shovel_knight_security.Helper
 {
     public class ShellHelper
     {
+        private readonly string[] _whitelistCommand = { "ls", "cat" };
+        private readonly string[] _blacklistParameter = { "&", "<", ";", "'", "`", "|", "\""};
         public string Bash(string cmd)
         {
             try
             {
+                if (!ValidateInput(cmd))
+                {
+                    return "Malicious command detected. Please give it up.";
+                }
+
                 string filesFolder = "cd Files &&";
                 string escapedArgs = $"{filesFolder} {cmd.Replace("\"", "\\\"")}";
 
@@ -34,6 +41,24 @@ namespace m183_shovel_knight_security.Helper
             {
                 return "The backend needs to be executed in a docker container";
             }
+        }
+
+        private bool ValidateInput(string cmd)
+        {
+            try
+            {
+                string[] command = cmd.Split(" ");
+                if (command.Length > 2) return false;
+                if (!_whitelistCommand.Contains(command[0])) return false;
+                if (command.Length == 2 && _blacklistParameter.Any(x => command[1].Contains(x))) return false;
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            
         }
     }
 }

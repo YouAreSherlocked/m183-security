@@ -15,6 +15,16 @@ namespace m183_shovel_knight_security.Data
             Database.EnsureCreated();
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            Seeder seeder = new Seeder();
+
+            // Seeders
+            seeder.SeedRoles(modelBuilder);
+            seeder.SeedUsers(modelBuilder);
+            seeder.SeedPosts(modelBuilder);
+        }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Post> Posts { get; set; }

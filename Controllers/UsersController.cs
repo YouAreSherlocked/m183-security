@@ -20,7 +20,7 @@ namespace m183_shovel_knight_security.Controllers
     [Route("api/[controller]/[action]")]
     [Authorize]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : AuthControllerBase
     {
         private UserService _userService;
         private readonly AppSettings _appSettings;
@@ -36,6 +36,11 @@ namespace m183_shovel_knight_security.Controllers
             _appSettings = appSettings.Value;
         }
 
+        /// <summary>
+        /// Authenticates a user.
+        /// </summary>
+        /// <remarks>
+        /// </remarks>
         [AllowAnonymous]
         [HttpPost]
         public IActionResult Login([FromBody] AuthenticationModel model)
@@ -43,7 +48,11 @@ namespace m183_shovel_knight_security.Controllers
             var user = _userService.Authenticate(model.Nickname, model.Password);
 
             if (user == null)
-                return BadRequest(new { message = "Nickname or password is incorrect" });
+            {
+                _logger.LogWarning($"Failed login request for nickname: {model.Nickname} | password: {model.Password}");
+                return BadRequest(new { message = "Nickname or password is/are incorrect" });
+            }
+                
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -53,7 +62,7 @@ namespace m183_shovel_knight_security.Controllers
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddHours(4),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -70,9 +79,14 @@ namespace m183_shovel_knight_security.Controllers
             return Ok(userInfo);
         }
 
+        /// <summary>
+        /// Registers a new user.
+        /// </summary>
+        /// <remarks>
+        /// </remarks>
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Register([FromBody] AuthenticationModel model)
+        public IActionResult Register([FromBody] RegistrationModel model)
         {
             try
             {
@@ -88,6 +102,26 @@ namespace m183_shovel_knight_security.Controllers
             }
         }
 
+        /// <summary>
+        /// Get a user by id (Admin role is needed)
+        /// </summary>
+        /// <remarks>
+        /// Sensitive data (password) are in safety. :)
+        /// </remarks>
+        [HttpGet]
+        public IActionResult GetById(Guid id)
+        {
+            var user = _userService.GetById(id);
+            if (user == null) return BadRequest($"User with id {id} not found");
+            return Ok(user);
+        }
+
+        /// <summary>
+        /// Get all users (Admin role is needed)
+        /// </summary>
+        /// <remarks>
+        /// Sensitive data (password) are in safety. :)
+        /// </remarks>
         [HttpGet]
         public IActionResult GetAll()
         {
