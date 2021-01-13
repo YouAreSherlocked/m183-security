@@ -114,6 +114,7 @@ namespace m183_shovel_knight_security.Controllers
             var user = _userService.GetById(GetUserIdFromToken());
             if (user.RoleId != (int)RoleName.Admin)
             {
+                _logger.LogWarning($"USER failing to request one user (not admin/not owner) - User id: {user.Id}");
                 return Unauthorized($"Access denied.");
             }
             var selectedUser = _userService.GetById(id);
@@ -133,6 +134,7 @@ namespace m183_shovel_knight_security.Controllers
             var user = _userService.GetById(GetUserIdFromToken());
             if (user.RoleId != (int)RoleName.Admin)
             {
+                _logger.LogWarning($"USER failing to request all users (not admin/not owner) - User id: {user.Id}");
                 return Unauthorized($"Access denied.");
             }
             var users = _userService.GetAll();
