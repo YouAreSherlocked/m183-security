@@ -111,9 +111,14 @@ namespace m183_shovel_knight_security.Controllers
         [HttpGet]
         public IActionResult GetById(Guid id)
         {
-            var user = _userService.GetById(id);
+            var user = _userService.GetById(GetUserIdFromToken());
+            if (user.RoleId != (int)RoleName.Admin)
+            {
+                return Unauthorized($"Access denied.");
+            }
+            var selectedUser = _userService.GetById(id);
             if (user == null) return BadRequest($"User with id {id} not found");
-            return Ok(user);
+            return Ok(selectedUser);
         }
 
         /// <summary>
@@ -125,6 +130,11 @@ namespace m183_shovel_knight_security.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
+            var user = _userService.GetById(GetUserIdFromToken());
+            if (user.RoleId != (int)RoleName.Admin)
+            {
+                return Unauthorized($"Access denied.");
+            }
             var users = _userService.GetAll();
             return Ok(users);
         }
