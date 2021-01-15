@@ -8,7 +8,32 @@
 }
 
 header {
-  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  margin: 0 -20px 40px;
+}
+
+header > * {
+  margin: 0 20px;
+}
+
+.btn {
+  text-align: center;
+  width: 100px;
+}
+
+.btn:hover {
+  background: #222;
+}
+
+.btn.btn-logout {
+  background: none;
+  color: 333;
+}
+
+.btn.btn-logout:hover {
+  font-weight: bold;
+  background:none;
 }
 
 nav > * {
@@ -18,4 +43,12 @@ nav > * {
 form input {
   display: block;
   margin-bottom: 20px;
+}
+
+.knight-img {
+  width: 400px;
+  height: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }

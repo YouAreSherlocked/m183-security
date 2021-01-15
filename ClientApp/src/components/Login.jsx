@@ -15,7 +15,7 @@ class Login extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({'nickname': user, 'password': pw})
-    }).then(res => res.text()).then(res => this.setState({output: res}))
+    }).then(res => res.json()).then(res => localStorage.setItem('auth', `Bearer ${res.token}`))
   }
 
   render () {

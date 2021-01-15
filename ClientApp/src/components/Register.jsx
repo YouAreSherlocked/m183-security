@@ -7,14 +7,15 @@ class Register extends Component {
   async register(e) {
     e.preventDefault()
     const user = e.target['user'].value
-    const pw = e.target['password'].value
+    const pw = e.target['Password'].value
+    const cpw = e.target['ConfirmPassword'].value
 
     await fetch(`${API_URL}/api/users/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({'nickname': user, 'password': pw})
+      body: JSON.stringify({'Nickname': user, 'Password': pw, ConfirmPassword: cpw})
     }).then(res => res.text()).then(res => this.setState({output: res}))
   }
 
@@ -26,8 +27,10 @@ class Register extends Component {
         <form onSubmit={e => this.register(e)}>
             <label htmlFor="user">User</label>
             <input type="text" name="user" id="user"></input>
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password"></input>
+            <label htmlFor="Password">Password</label>
+            <input type="password" name="Password" id="Password"></input>
+            <label htmlFor="ConfirmPassword">Confirm Password</label>
+            <input type="password" name="ConfirmPassword" id="ConfirmPassword"></input>
             <input type="submit" name="submit" id="submit" value="submit"></input>
         </form>
       </Fragment>

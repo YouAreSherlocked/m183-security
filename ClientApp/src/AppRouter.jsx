@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Files from './components/Files';
 import Register from './components/Register';
 import Post from './components/Post';
+import Knights from './components/Knights';
 
 class AppRouter extends Component {
 
@@ -17,6 +18,7 @@ class AppRouter extends Component {
                     <Route exact path="/files" component={ Files }></Route>
                     <Route exact path="/login" component={ Login }></Route>
                     <Route exact path="/register" component={ Register }></Route>
+                    <Route exact path="/knights" component={ Knights }></Route>
                     <Route exact path="/post" component={ Post }></Route>
                     <Route component={ Home }></Route>
                 </Switch>
