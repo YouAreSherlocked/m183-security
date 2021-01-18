@@ -16,7 +16,6 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    console.log('o')
     const sessionActive = parseInt(localStorage.getItem('sessionActive'))
     if (sessionActive === 1) {
       this.setState({sessionActive: true})
@@ -37,11 +36,18 @@ class Login extends Component {
         },
         body: JSON.stringify({'nickname': user, 'password': pw})
       }).then(res => res.json()).then(res => localStorage.setItem('auth', `Bearer ${res.token}`))
-      localStorage.setItem('sessionActive', 1)
-      this.setState({'sessionActive': true})
+      if (localStorage.getItem('auth') !== 'Bearer undefined') {
+
+        localStorage.setItem('sessionActive', 1)
+        this.setState({'sessionActive': true})
+      }
+      window.open('/login', '_self')
+
+
     } else {
       alert("please resolve ReCaptcha")
     }
+
   }
 
   handleCaptcha() {
