@@ -21,7 +21,8 @@ class Post extends Component {
         await fetch(`${API_URL}/api/...`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'apikey': 'showdown'
             },
             body: JSON.stringify({ 'image': image, 'text': text})
         }).then(res => res.text()).then(res => this.setState({output: res}))

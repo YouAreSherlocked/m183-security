@@ -13,7 +13,8 @@ class Register extends Component {
     await fetch(`${API_URL}/api/users/register`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'apikey': 'showdown'
       },
       body: JSON.stringify({'Nickname': user, 'Password': pw, ConfirmPassword: cpw})
     }).then(res => res.text()).then(res => this.setState({output: res}))

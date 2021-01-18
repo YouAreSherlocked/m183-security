@@ -8,14 +8,21 @@ class Knights extends Component {
       super(props)
 
       this.state = {
-          knights: []
+          knights: [],
+          unauthorized: false
       }
 
   }
   async componentDidMount() {
     await fetch(`${API_URL}/api/posts/getall`, {
-      method: 'GET'
-    }).then(res => res.json()).then(res => this.setState({knights: res}))
+      method: 'GET',
+      headers: {
+          'Authorization': localStorage.getItem('auth'),
+          'apikey': 'showdown'
+      }
+    }).then(res => res.json()).then(res => this.setState({knights: res})).catch((error) => {
+        this.setState({unauthorized: true})
+      })
   }
 
   render () {
@@ -23,11 +30,11 @@ class Knights extends Component {
       <Fragment>
         <Header></Header>
         <h1>Knights</h1>
-        { this.state.knights ? 
+        { this.state.unauthorized ? <p>Please Log In to see the content.</p> : this.state.knights ? 
             this.state.knights.map((knight, i) => (
-                <Fragment>
+                <Fragment key={i}>
                     <h2>{ knight.text }</h2>
-                    <div className="knight-img" style={{backgroundImage: "url(" + knight.imageUrl + ")"}}></div>
+                    <img className="knight-img" src={knight.imageUrl}></img>
                 </Fragment>
             )) : null}
       </Fragment>

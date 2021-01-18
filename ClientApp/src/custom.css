@@ -46,9 +46,7 @@ form input {
 }
 
 .knight-img {
-  width: 400px;
-  height: 200px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  width: 300px;
+  height: auto;
+  margin-bottom: 60px;
 }
