@@ -20,6 +20,9 @@ header > * {
 .btn {
   text-align: center;
   width: 100px;
+  background: #333;
+  margin-right: 20px;
+  color: #fff;
 }
 
 .btn:hover {
@@ -28,7 +31,7 @@ header > * {
 
 .btn.btn-logout {
   background: none;
-  color: 333;
+  color: #333;
 }
 
 .btn.btn-logout:hover {
@@ -49,4 +52,9 @@ form input {
   width: 300px;
   height: auto;
   margin-bottom: 60px;
+}
+
+.knight-wrapper {
+  border-bottom: 1px solid black;
+  padding: 20px 0;
 }

@@ -27,7 +27,8 @@ class Post extends Component {
             },
             body: JSON.stringify({ 'text': text, 'imageUrl': imageUrl})
         }).then(res => res.text()).then(res => this.setState({output: res}))
-        alert('New Knight Created.')
+        window.open('/knights/all', '_self')
+
     }
 
     render () {
